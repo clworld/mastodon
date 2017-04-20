@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Subscription < ApplicationRecord
+  acts_as_paranoid
+
   MIN_EXPIRATION = 3600 * 24 * 7
   MAX_EXPIRATION = 3600 * 24 * 30
 
