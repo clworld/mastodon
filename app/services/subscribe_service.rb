@@ -9,11 +9,11 @@ class SubscribeService < BaseService
 
     unless response.successful?
       account.secret = ''
-      Rails.logger.debug "PuSH subscription request for #{account.acct} failed: #{response.message}"
+      Rails.logger.info "PuSH subscription request for #{account.acct} failed: #{response.message}"
     end
 
     account.save!
-  rescue HTTP::Error, OpenSSL::SSL::SSLError
-    Rails.logger.debug "PuSH subscription request for #{account.acct} could not be made due to HTTP or SSL error"
+  rescue HTTP::Error, OpenSSL::SSL::SSLError => e
+    Rails.logger.info "PuSH subscription request for #{account.acct} could not be made due to HTTP or SSL error: #{e.message}"
   end
 end
