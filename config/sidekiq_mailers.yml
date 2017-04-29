@@ -1,0 +1,7 @@
+---
+:concurrency: 5
+:daemon: true
+:pidfile: tmp/pids/sidekiq_mailers.pid
+:logfile: log/sidekiq_mailers.log
+:queues:
+  - mailers

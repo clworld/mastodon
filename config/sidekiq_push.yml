@@ -1,0 +1,7 @@
+---
+:concurrency: 20
+:daemon: true
+:pidfile: tmp/pids/sidekiq_push.pid
+:logfile: log/sidekiq_push.log
+:queues:
+  - push
