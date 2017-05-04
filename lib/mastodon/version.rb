@@ -20,12 +20,17 @@ module Mastodon
       nil
     end
 
+    def append_version
+      ENV['APPEND_VERSION']
+    end
+
     def to_a
       [major, minor, patch, pre].compact
     end
 
     def to_s
-      to_a.join('.')
+	  append = append_version.present? ? " #{append_version}" : ''
+      to_a.join('.') + append
     end
   end
 end
