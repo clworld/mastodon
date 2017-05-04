@@ -60,14 +60,7 @@ GEM
     aws-sdk-resources (2.9.14)
       aws-sdk-core (= 2.9.14)
     aws-sigv4 (1.0.0)
-    babel-source (5.8.35)
-    babel-transpiler (0.7.0)
-      babel-source (>= 4.0, < 6)
-      execjs (~> 2.0)
     bcrypt (3.1.11)
-    best_in_place (3.0.3)
-      actionpack (>= 3.2)
-      railties (>= 3.2)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -344,12 +337,6 @@ GEM
     rainbow (2.2.2)
       rake
     rake (11.3.0)
-    react-rails (2.1.0)
-      babel-transpiler (>= 0.7.0)
-      connection_pool
-      execjs
-      railties (>= 3.2)
-      tilt
     redis (3.3.3)
     redis-actionpack (5.0.1)
       actionpack (>= 4.0, < 6)
@@ -480,7 +467,6 @@ DEPENDENCIES
   addressable
   annotate
   aws-sdk (>= 2.0)
-  best_in_place (~> 3.0.1)
   better_errors
   binding_of_caller
   bullet
@@ -535,7 +521,6 @@ DEPENDENCIES
   rails-i18n
   rails-settings-cached
   rails_12factor
-  react-rails
   redis (~> 3.2)
   redis-rails
   rqrcode

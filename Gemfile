@@ -13,7 +13,6 @@ gem 'hamlit-rails'
 gem 'pg'
 gem 'pghero'
 gem 'dotenv-rails'
-gem 'best_in_place', '~> 3.0.1'
 
 gem 'aws-sdk', '>= 2.0'
 gem 'paperclip', '~> 5.1'
@@ -57,9 +56,6 @@ gem 'statsd-instrument'
 gem 'twitter-text'
 gem 'tzinfo-data'
 gem 'webpacker', '~>1.2'
-
-# For some reason the view specs start failing without this
-gem 'react-rails'
 
 group :development, :test do
   gem 'fabrication'
