@@ -25,11 +25,10 @@ class Pubsubhubbub::DeliveryWorker
                    .headers(headers)
                    .post(subscription.callback_url, body: payload)
 
-    if response.code > 299 && response.code < 500 && response.code != 429 # HTTP 4xx means error is not temporary, except for 429 (throttling)
-        Rails.logger.warn("Subscription destoroyed for #{subscription.callback_url}: HTTP #{response.code}")
-        return subscription.destroy!
-    end
-    raise "Delivery failed for #{subscription.callback_url}: HTTP #{response.code}" unless response.code > 199 && response.code < 300
+    if response_failed_permanently?(response) # HTTP 4xx means error is not temporary, except for 429 (throttling)
+	  Rails.logger.warn("Subscription destoroyed for #{subscription.callback_url}: HTTP #{response.code}")
+	  return subscription.destroy!
+	end
 
     subscription.touch(:last_successful_delivery_at)
   end
@@ -39,5 +38,13 @@ class Pubsubhubbub::DeliveryWorker
   def signature(secret, payload)
     hmac = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), secret, payload)
     "sha1=#{hmac}"
+  end
+
+  def response_failed_permanently?(response)
+    response.code > 299 && response.code < 500 && response.code != 429
+  end
+
+  def response_successful?(response)
+    response.code > 199 && response.code < 300
   end
 end
