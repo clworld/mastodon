@@ -26,9 +26,9 @@ class Pubsubhubbub::DeliveryWorker
                    .post(subscription.callback_url, body: payload)
 
     if response_failed_permanently?(response) # HTTP 4xx means error is not temporary, except for 429 (throttling)
-	  Rails.logger.warn("Subscription destoroyed for #{subscription.callback_url}: HTTP #{response.code}")
-	  return subscription.destroy!
-	end
+      Rails.logger.warn("Subscription destoroyed for #{subscription.callback_url}: HTTP #{response.code}")
+      return subscription.destroy!
+    end
 
     subscription.touch(:last_successful_delivery_at)
   end

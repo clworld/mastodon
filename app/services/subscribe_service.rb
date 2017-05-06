@@ -25,6 +25,7 @@ class SubscribeService < BaseService
   end
 
   private
+
   def response_failed_permanently?(response)
     response.code > 299 && response.code < 500 && response.code != 429
   end
