@@ -15,6 +15,6 @@ class Scheduler::SubscriptionsScheduler
   private
 
   def expiring_accounts
-    Account.expiring(1.day.from_now).partitioned
+    Account.expiring(2.day.from_now).partitioned
   end
 end

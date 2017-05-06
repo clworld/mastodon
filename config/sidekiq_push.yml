@@ -5,3 +5,7 @@
 :logfile: log/sidekiq_push.log
 :queues:
   - push
+:schedule:
+  subscriptions_scheduler:
+    cron: '25 4,17 * * *'
+    class: Scheduler::SubscriptionsScheduler
