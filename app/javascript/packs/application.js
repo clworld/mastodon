@@ -9,6 +9,8 @@ if (!window.Intl) {
   require('intl/locale-data/jsonp/en.js');
 }
 
+require("babel-polyfill");
+
 window.jQuery = window.$ = require('jquery');
 window.Perf = require('react-addons-perf');
 
