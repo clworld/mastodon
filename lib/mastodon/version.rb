@@ -19,13 +19,24 @@ module Mastodon
     def pre
       nil
     end
+	
+	class << self
+	  alias_method :original_patch, :patch
+	end
+	@@patch = nil
+	def patch
+	  @@patch = ENV['VERSION_PATCH'].present? ? ENV['VERSION_PATCH'] : '' if @@patch.nil?
+	  @@patch.present? ? @@patch : original_patch
+	end
 
+	@@append_version = nil
     def append_version
-      ENV['APPEND_VERSION']
+	  @@append_version = ENV['APPEND_VERSION'].present? ? ENV['APPEND_VERSION'] : '' if @@append_version.nil?
+      @@append_version
     end
 
     def to_a
-      [major, minor, patch, pre].compact
+      [major, minor, patch, pre].select { |v| v.present? }
     end
 
     def to_s
