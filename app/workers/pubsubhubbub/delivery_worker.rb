@@ -29,6 +29,7 @@ class Pubsubhubbub::DeliveryWorker
       Rails.logger.warn("Subscription destoroyed for #{subscription.callback_url}: HTTP #{response.code}")
       return subscription.destroy!
     end
+    raise "Delivery failed for #{subscription.callback_url}: HTTP #{response.code}" unless response_successful?(response)
 
     subscription.touch(:last_successful_delivery_at)
   end
