@@ -69,11 +69,9 @@ RSpec.describe Formatter do
       end
     end
 
-=begin
-    it 'matches a URL without closing paranthesis' do
+    xit 'matches a URL without closing paranthesis' do
       expect(subject.match('(http://google.com/)')[0]).to eq 'http://google.com'
     end
-=end
 
     context 'matches a URL without exclamation point' do
       let(:local_text) { 'http://www.google.com!' }
@@ -121,6 +119,13 @@ RSpec.describe Formatter do
       let(:local_text) { %q{<img src="javascript:alert('XSS');">} }
       it 'has valid url' do
         expect(subject).to match '<p>&lt;img src=&quot;javascript:alert(&apos;XSS&apos;);&quot;&gt;</p>'
+      end
+    end
+
+    context 'contains invalid URL' do
+      let(:local_text) { 'http://www\.google\.com' }
+      it 'has valid url' do
+        expect(subject).to eq '<p>http://www\.google\.com</p>'
       end
     end
   end

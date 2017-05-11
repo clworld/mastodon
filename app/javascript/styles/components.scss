@@ -58,7 +58,7 @@
   padding: 15px;
   position: absolute;
   right: 0;
-  top: -49px;
+  top: -48px;
   z-index: 3;
 
   &:hover {
@@ -474,15 +474,18 @@
   }
 }
 
-a.status__content__spoiler-link {
+.status__content__spoiler-link {
   display: inline-block;
   border-radius: 2px;
+  background: transparent;
+  border: 0;
   color: lighten($ui-base-color, 8%);
   font-weight: 500;
   font-size: 11px;
   padding: 0 6px;
   text-transform: uppercase;
   line-height: inherit;
+  cursor: pointer;
 }
 
 .status__prepend-icon-wrapper {
@@ -608,6 +611,34 @@ a.status__content__spoiler-link {
   width: 18px;
 }
 
+.detailed-status__action-bar-dropdown {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .dropdown {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+
+  .dropdown--active {
+    .dropdown__content.dropdown__left {
+      left: 20px;
+      right: initial;
+    }
+
+    &::after {
+      bottom: initial;
+      margin-left: 7px;
+      margin-top: -7px;
+      right: initial;
+    }
+  }
+}
+
 .detailed-status {
   background: lighten($ui-base-color, 4%);
   padding: 14px 10px;
@@ -688,6 +719,7 @@ a.status__content__spoiler-link {
 .account__avatar {
   @include avatar-radius();
   position: relative;
+  cursor: pointer;
 
   &-inline {
     display: inline-block;
@@ -1473,7 +1505,7 @@ a.status__content__spoiler-link {
   padding: 15px;
   position: absolute;
   right: 0;
-  top: -49px;
+  top: -48px;
 }
 
 .react-toggle {
@@ -2164,6 +2196,7 @@ button.icon-button.active i.fa-retweet {
   display: flex;
   flex: 1 1 auto;
   align-items: center;
+  justify-content: center;
 
   a {
     color: $ui-highlight-color;

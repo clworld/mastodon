@@ -9,13 +9,15 @@ class Formatter
 
   include ActionView::Helpers::TextHelper
 
-  def format(status)
-    return reformat(status.content) unless status.local?
+  def format(status, attribute = :text, paragraphize = true)
+    raw_content = status.public_send(attribute)
 
-    html = status.text
+    return '' if raw_content.blank?
+    return reformat(raw_content) unless status.local?
+
+    html = raw_content
     html = encode_and_link_urls(html, status.mentions)
-
-    html = simple_format(html, {}, sanitize: false)
+    html = simple_format(html, {}, sanitize: false) if paragraphize
     html = html.delete("\n")
 
     html.html_safe # rubocop:disable Rails/OutputSafety
@@ -92,6 +94,8 @@ class Formatter
       rel: 'nofollow noopener',
     }
     Twitter::Autolink.send(:link_to_text, entity, link_html(entity[:url]), normalized_url, html_attrs)
+  rescue Addressable::URI::InvalidURIError
+    encode(entity[:url])
   end
 
   def link_to_mention(entity, mentions)
