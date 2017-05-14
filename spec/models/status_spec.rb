@@ -179,6 +179,19 @@ RSpec.describe Status, type: :model do
     end
   end
 
+  describe '#ancestors' do
+    it 'ignores deleted records' do
+      first_status = Fabricate(:status, account: bob)
+      second_status = Fabricate(:status, thread: first_status, account: alice)
+
+      # Create cache and delete cached record
+      second_status.ancestors
+      first_status.destroy
+
+      expect(second_status.ancestors).to eq([])
+    end
+  end
+
   describe '#filter_from_context?' do
     pending
   end
@@ -375,6 +388,25 @@ RSpec.describe Status, type: :model do
 
       results = Status.as_tag_timeline(tag)
       expect(results).to include(status)
+    end
+  end
+
+  describe 'before_create' do
+    it 'sets account being replied to correctly over intermediary nodes' do
+      first_status = Fabricate(:status, account: bob)
+      intermediary = Fabricate(:status, thread: first_status, account: alice)
+      final        = Fabricate(:status, thread: intermediary, account: alice)
+
+      expect(final.in_reply_to_account_id).to eq bob.id
+    end
+
+    it 'creates new conversation for stand-alone status' do
+      expect(Status.create(account: alice, text: 'First').conversation_id).to_not be_nil
+    end
+
+    it 'keeps conversation of parent node' do
+      parent = Fabricate(:status, text: 'First')
+      expect(Status.create(account: alice, thread: parent, text: 'Response').conversation_id).to eq parent.conversation_id
     end
   end
 end
