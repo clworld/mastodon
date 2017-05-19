@@ -2,7 +2,7 @@ import React from 'react';
 import Column from '../ui/components/column';
 import ColumnLink from '../ui/components/column_link';
 import ColumnSubheading from '../ui/components/column_subheading';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -60,7 +60,7 @@ class GettingStarted extends ImmutablePureComponent {
           <ColumnLink icon='sign-out' text={intl.formatMessage(messages.sign_out)} href='/auth/sign_out' method='delete' />
         </div>
 
-        <div className='scrollable optionally-scrollable' style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className='getting-started__footer scrollable optionally-scrollable'>
           <div className='static-content getting-started'>
             <p>
               <FormattedMessage
