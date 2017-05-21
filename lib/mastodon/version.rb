@@ -21,12 +21,18 @@ module Mastodon
     end
 	
 	class << self
+	  alias_method :original_minor, :minor
 	  alias_method :original_patch, :patch
+	end
+	@@minor = nil
+	def minor
+	  @@minor = !ENV['VERSION_MINOR'].nil? ? ENV['VERSION_MINOR'] : '' if @@minor.nil?
+	  !@@minor.nil? ? @@minor : original_minor
 	end
 	@@patch = nil
 	def patch
-	  @@patch = ENV['VERSION_PATCH'].present? ? ENV['VERSION_PATCH'] : '' if @@patch.nil?
-	  @@patch.present? ? @@patch : original_patch
+	  @@patch = !ENV['VERSION_PATCH'].nil? ? ENV['VERSION_PATCH'] : '' if @@patch.nil?
+	  !@@patch.nil? ? @@patch : original_patch
 	end
 
 	@@append_version = nil
