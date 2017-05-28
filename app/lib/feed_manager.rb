@@ -6,6 +6,7 @@ class FeedManager
   include Singleton
 
   MAX_ITEMS = ENV['FEED_MAX_ITEMS'].present? ? ENV['FEED_MAX_ITEMS'].to_i : 400
+  TRIM_INTERVAL = ENV['FEED_TRIM_INTERVAL'].present? ? ENV['FEED_TRIM_INTERVAL'].to_i : 1
 
   def key(type, id)
     "feed:#{type}:#{id}"
@@ -38,7 +39,7 @@ class FeedManager
   end
 
   def trim(type, account_id)
-    return unless redis.zcard(key(type, account_id)) > FeedManager::MAX_ITEMS
+    return unless redis.zcard(key(type, account_id)) >= FeedManager::MAX_ITEMS + FeedManager::TRIM_INTERVAL
     last = redis.zrevrange(key(type, account_id), FeedManager::MAX_ITEMS - 1, FeedManager::MAX_ITEMS - 1)
     redis.zremrangebyscore(key(type, account_id), '-inf', "(#{last.last}")
   end
