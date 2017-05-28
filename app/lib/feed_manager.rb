@@ -5,7 +5,7 @@ require 'singleton'
 class FeedManager
   include Singleton
 
-  MAX_ITEMS = 400
+  MAX_ITEMS = ENV['FEED_MAX_ITEMS'].present? ? ENV['FEED_MAX_ITEMS'].to_i : 400
 
   def key(type, id)
     "feed:#{type}:#{id}"
