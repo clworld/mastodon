@@ -4,7 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import ColumnCollapsable from '../../../components/column_collapsable';
 import SettingToggle from '../../notifications/components/setting_toggle';
-import SettingText from './setting_text';
+import SettingText from '../../../components/setting_text';
 
 const messages = defineMessages({
   filter_regex: { id: 'home.column_settings.filter_regex', defaultMessage: 'Filter out by regular expressions' },
