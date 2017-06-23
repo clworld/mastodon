@@ -21,7 +21,12 @@ class Pubsubhubbub::DeliveryWorker
   private
 
   def process_delivery
-    payload_delivery
+	begin
+      payload_delivery
+    rescue => e
+	  Rails.logger.warn("Delivery failed for #{subscription.callback_url}: #{e.message}")
+	  raise
+	end
 
     raise "Delivery failed for #{subscription.callback_url}: HTTP #{payload_delivery.code}" unless response_successful?
 

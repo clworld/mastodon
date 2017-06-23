@@ -105,4 +105,4 @@ group :production do
   gem 'redis-rails', '~> 5.0'
 end
 
-gem 'paranoia', '~> 2.2'
+gem 'paranoia', '~> 2.3.1'

@@ -14,6 +14,7 @@ name = ENV.fetch('NAME') { 'puma' }
 daemonize true
 state_path "tmp/pids/#{name}.state"
 pidfile "tmp/pids/#{name}.pid"
+stdout_redirect "log/#{name}.stdout.log", "log/#{name}.stderr.log", true
 
 preload_app!
 

@@ -269,8 +269,8 @@ GEM
     parallel (1.11.2)
     parallel_tests (2.14.1)
       parallel
-    paranoia (2.3.0)
-      activerecord (>= 4.0, < 5.1)
+    paranoia (2.3.1)
+      activerecord (>= 4.0, < 5.2)
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.20.0)
@@ -523,6 +523,7 @@ DEPENDENCIES
   paperclip (~> 5.1)
   paperclip-av-transcoder (~> 0.6)
   parallel_tests (~> 2.14)
+  paranoia (~> 2.3.1)
   pg (~> 0.20)
   pghero (~> 1.7)
   pkg-config (~> 1.2)
