@@ -58,37 +58,6 @@
   position: relative;
 }
 
-.column-collapsable {
-  position: relative;
-
-  .column-collapsable__content {
-    overflow: auto;
-    transition: 300ms ease;
-    opacity: 1;
-    max-height: 70vh;
-  }
-
-  &.collapsed .column-collapsable__content {
-    height: 0 !important;
-    opacity: 0;
-  }
-
-  .column-collapsable__button {
-    color: $primary-text-color;
-    background: lighten($ui-base-color, 8%);
-
-    &:hover {
-      color: $primary-text-color;
-      background: lighten($ui-base-color, 8%);
-    }
-  }
-
-  &.collapsed .column-collapsable__button {
-    color: $ui-primary-color;
-    background: lighten($ui-base-color, 4%);
-  }
-}
-
 .column-icon {
   background: lighten($ui-base-color, 4%);
   color: $ui-primary-color;
@@ -1130,20 +1099,22 @@
 
 .image-loader {
   position: relative;
-}
 
-.image-loader__preview-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  filter: blur(2px);
-}
+  &.image-loader--loading {
+    .image-loader__preview-canvas {
+      filter: blur(2px);
+    }
+  }
 
-.media-modal img.image-loader__preview-img {
-  width: 100%;
-  height: 100%;
+  .image-loader__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-image: none;
+  }
 }
 
 .navigation-bar {
@@ -1473,8 +1444,10 @@
   &:hover,
   &:focus,
   &:active {
-    background: lighten($ui-base-color, 14%);
-    transition: all 100ms linear;
+    @media screen and (min-width: 1025px) {
+      background: lighten($ui-base-color, 14%);
+      transition: all 100ms linear;
+    }
   }
 
   span {
@@ -2108,11 +2081,6 @@ button.icon-button.active i.fa-retweet {
   transition: max-height 150ms ease-in-out, opacity 300ms linear;
   opacity: 1;
 
-  & > div {
-    background: lighten($ui-base-color, 8%);
-    padding: 15px;
-  }
-
   &.collapsed {
     max-height: 0;
     opacity: 0.5;
@@ -2121,6 +2089,11 @@ button.icon-button.active i.fa-retweet {
   &.animating {
     overflow-y: hidden;
   }
+}
+
+.column-header__collapsible-inner {
+  background: lighten($ui-base-color, 8%);
+  padding: 15px;
 }
 
 .column-header__setting-btn {
@@ -2962,6 +2935,7 @@ button.icon-button.active i.fa-retweet {
   position: relative;
 
   img,
+  canvas,
   video {
     max-width: 80vw;
     max-height: 80vh;
@@ -2969,7 +2943,8 @@ button.icon-button.active i.fa-retweet {
     height: auto;
   }
 
-  img {
+  img,
+  canvas {
     display: block;
     background: url('../images/void.png') repeat;
   }
@@ -3155,6 +3130,7 @@ button.icon-button.active i.fa-retweet {
 @media screen and (max-width: 400px) {
   .onboarding-modal__page-one {
     flex-direction: column;
+    align-items: normal;
   }
 
   .onboarding-modal__page-one__elephant-friend {
@@ -3477,10 +3453,15 @@ button.icon-button.active i.fa-retweet {
   background-repeat: no-repeat;
   background-size: cover;
   cursor: zoom-in;
-  display: block;
-  height: 100%;
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  width: 100%;
+  height: 100%;
+
+  &,
+  img {
+    width: 100%;
+  }
 }
 
 .media-gallery__gifv {
