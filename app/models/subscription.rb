@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: subscriptions
@@ -13,13 +12,14 @@
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
 #  last_successful_delivery_at :datetime
+#  domain                      :string
 #
 
 class Subscription < ApplicationRecord
   acts_as_paranoid
 
-  MIN_EXPIRATION = 7.days.seconds.to_i
-  MAX_EXPIRATION = 30.days.seconds.to_i
+  MIN_EXPIRATION = 1.day.to_i
+  MAX_EXPIRATION = 30.days.to_i
 
   belongs_to :account, required: true
 
