@@ -11,7 +11,7 @@ class SubscribeService < BaseService
     if response_failed_permanently?
       # We're not allowed to subscribe. Fail and move on.
       @account.secret = ''
-      Rails.logger.info "PuSH subscription request for #{account.acct} failed: #{response.message}"
+      Rails.logger.info "PuSH subscription request for #{account.acct} failed: #{@response}"
       @account.save!
     elsif response_successful?
       # The subscription will be confirmed asynchronously.
