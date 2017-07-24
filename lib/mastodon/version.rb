@@ -9,11 +9,11 @@ module Mastodon
     end
 
     def minor
-      4
+      5
     end
 
     def patch
-      7
+      0
     end
 
     def pre
@@ -41,13 +41,17 @@ module Mastodon
       @@append_version
     end
 
+    def flags
+      'rc1'
+    end
+
     def to_a
       [major, minor, patch, pre].select { |v| v.present? }
     end
 
     def to_s
-    append = append_version.present? ? " #{append_version}" : ''
-      to_a.join('.') + append
+      append = append_version.present? ? " #{append_version}" : ''
+      [to_a.join('.'), flags, append].join
     end
   end
 end
