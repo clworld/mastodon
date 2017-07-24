@@ -1177,6 +1177,11 @@
   .permalink {
     text-decoration: none;
   }
+
+  .icon-button {
+    pointer-events: none;
+    opacity: 0;
+  }
 }
 
 .navigation-bar__profile {
@@ -1851,7 +1856,7 @@
 
 .getting-started__wrapper {
   position: relative;
-  flex: 0 0 auto;
+  overflow-y: scroll;
 }
 
 .getting-started__footer {
@@ -2208,11 +2213,72 @@ button.icon-button.active i.fa-retweet {
 }
 
 .loading-indicator {
-  color: $ui-secondary-color;
-  font-size: 16px;
-  font-weight: 500;
-  padding-top: 120px;
-  text-align: center;
+  color: lighten($ui-base-color, 26%);
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  overflow: visible;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  span {
+    display: block;
+    float: left;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin: 82px 0 0 50%;
+    white-space: nowrap;
+    animation: loader-label 1.15s infinite cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+}
+
+.loading-indicator__figure {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  box-sizing: border-box;
+  border: 0 solid lighten($ui-base-color, 26%);
+  border-radius: 50%;
+  animation: loader-figure 1.15s infinite cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+@keyframes loader-figure {
+  0% {
+    width: 0;
+    height: 0;
+    background-color: lighten($ui-base-color, 26%);
+  }
+
+  29% {
+    background-color: lighten($ui-base-color, 26%);
+  }
+
+  30% {
+    width: 42px;
+    height: 42px;
+    background-color: transparent;
+    border-width: 21px;
+    opacity: 1;
+  }
+
+  100% {
+    width: 42px;
+    height: 42px;
+    border-width: 0;
+    opacity: 0;
+    background-color: transparent;
+  }
+}
+
+@keyframes loader-label {
+  0% { opacity: 0.25; }
+  30% { opacity: 1; }
+  100% { opacity: 0.25; }
 }
 
 .video-error-cover {
@@ -2991,6 +3057,10 @@ button.icon-button.active i.fa-retweet {
   }
 }
 
+.media-modal__content {
+  background: $base-overlay-background;
+}
+
 .media-modal__close {
   position: absolute;
   right: 4px;
@@ -3718,8 +3788,85 @@ button.icon-button.active i.fa-retweet {
 noscript {
   text-align: center;
 
+  img {
+    width: 200px;
+    opacity: 0.5;
+    animation: flicker 4s infinite;
+  }
+
   div {
-    font-size: 20px;
-    margin: 20px 0;
+    font-size: 14px;
+    margin: 30px auto;
+    color: $ui-secondary-color;
+    max-width: 400px;
+  }
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  30% { opacity: 0.75; }
+  100% { opacity: 1; }
+}
+
+@media screen and (max-width: 1024px) and (max-height: 400px) {
+  $duration: 400ms;
+  $delay: 100ms;
+
+  .tabs-bar,
+  .search {
+    will-change: margin-top;
+    transition: margin-top $duration $delay;
+  }
+
+  .navigation-bar {
+    will-change: padding-bottom;
+    transition: padding-bottom $duration $delay;
+  }
+
+  .navigation-bar {
+    & > a:first-child {
+      will-change: margin-top, margin-left, width;
+      transition: margin-top $duration $delay, margin-left $duration ($duration + $delay);
+    }
+
+    & > .navigation-bar__profile-edit {
+      will-change: margin-top;
+      transition: margin-top $duration $delay;
+    }
+
+    & > .icon-button {
+      will-change: opacity;
+      transition: opacity $duration $delay;
+    }
+  }
+
+  .is-composing {
+    .tabs-bar,
+    .search {
+      margin-top: -50px;
+    }
+
+    .navigation-bar {
+      padding-bottom: 0;
+
+      & > a:first-child {
+        margin-top: -50px;
+        margin-left: -40px;
+      }
+
+      .navigation-bar__profile {
+        padding-top: 2px;
+      }
+
+      .navigation-bar__profile-edit {
+        position: absolute;
+        margin-top: -50px;
+      }
+
+      .icon-button {
+        pointer-events: auto;
+        opacity: 1;
+      }
+    }
   }
 }
