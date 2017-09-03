@@ -9,11 +9,11 @@ module Mastodon
     end
 
     def minor
-      5
+      6
     end
 
     def patch
-      1
+      0
     end
 
     def pre
@@ -42,7 +42,7 @@ module Mastodon
     end
 
     def flags
-      ''
+      'rc1'
     end
 
     def to_a
@@ -52,6 +52,23 @@ module Mastodon
     def to_s
       append = append_version.present? ? " #{append_version}" : ''
       [to_a.join('.'), flags, append].join
+    end
+
+    def source_base_url
+      'https://github.com/tootsuite/mastodon'
+    end
+
+    # specify git tag or commit hash here
+    def source_tag
+      nil
+    end
+
+    def source_url
+      if source_tag
+        "#{source_base_url}/tree/#{source_tag}"
+      else
+        source_base_url
+      end
     end
   end
 end
