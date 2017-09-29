@@ -136,7 +136,7 @@ class Item extends React.PureComponent {
           onClick={this.handleClick}
           target='_blank'
         >
-          <img src={previewUrl} srcSet={srcSet} sizes={sizes} alt='' />
+          <img src={previewUrl} srcSet={srcSet} sizes={sizes} alt={attachment.get('description')} />
         </a>
       );
     } else if (attachment.get('type') === 'gifv') {
@@ -146,6 +146,7 @@ class Item extends React.PureComponent {
         <div className={classNames('media-gallery__gifv', { autoplay: autoPlay })}>
           <video
             className='media-gallery__item-gifv-thumbnail'
+            aria-label={attachment.get('description')}
             role='application'
             src={attachment.get('url')}
             onClick={this.handleClick}
@@ -161,10 +162,8 @@ class Item extends React.PureComponent {
       );
     }
 
-    const style = standalone ? {} : { left, top, right, bottom, width: `${width}%`, height: `${height}%` };
-
     return (
-      <div className={classNames('media-gallery__item', { standalone })} key={attachment.get('id')} style={style}>
+      <div className={classNames('media-gallery__item', { standalone })} key={attachment.get('id')} style={{ left: left, top: top, right: right, bottom: bottom, width: `${width}%`, height: `${height}%` }}>
         {thumbnail}
       </div>
     );
