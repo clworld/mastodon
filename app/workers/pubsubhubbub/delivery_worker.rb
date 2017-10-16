@@ -32,6 +32,7 @@ class Pubsubhubbub::DeliveryWorker
 
     raise Mastodon::UnexpectedResponseError, payload_delivery unless response_successful?
 
+    payload_delivery.connection&.close
     subscription.touch(:last_successful_delivery_at)
   end
 
@@ -42,7 +43,7 @@ class Pubsubhubbub::DeliveryWorker
   def callback_post_payload
     request = Request.new(:post, subscription.callback_url, body: payload)
     request.add_headers(headers)
-    request.perform.flush
+    request.perform
   end
 
   def blocked_domain?
