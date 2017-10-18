@@ -42,7 +42,7 @@ module Mastodon
     end
 
     def flags
-      'rc3'
+      ''
     end
 
     def to_a
