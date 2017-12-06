@@ -11,7 +11,7 @@ module RoutingHelper
     end
   end
 
-  def full_asset_url(source, options = {})
+  def full_asset_url(source, **options)
     if use_storage?
       URI.join(root_url, source).to_s
 	else

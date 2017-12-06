@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125190735) do
+ActiveRecord::Schema.define(version: 20171129172043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 20171125190735) do
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
     t.bigint "target_account_id", null: false
+    t.boolean "show_reblogs", default: true, null: false
     t.index ["account_id", "target_account_id"], name: "index_follow_requests_on_account_id_and_target_account_id", unique: true
   end
 
@@ -168,6 +169,7 @@ ActiveRecord::Schema.define(version: 20171125190735) do
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
     t.bigint "target_account_id", null: false
+    t.boolean "show_reblogs", default: true, null: false
     t.index ["account_id", "target_account_id"], name: "index_follows_on_account_id_and_target_account_id", unique: true
   end
 
@@ -429,7 +431,7 @@ ActiveRecord::Schema.define(version: 20171125190735) do
     t.datetime "updated_at", null: false
     t.boolean "hidden", default: false, null: false
     t.bigint "account_id"
-    t.index ["account_id"], name: "index_stream_entries_on_account_id"
+    t.index ["account_id", "activity_type", "id"], name: "index_stream_entries_on_account_id_and_activity_type_and_id"
     t.index ["activity_id", "activity_type"], name: "index_stream_entries_on_activity_id_and_activity_type"
   end
 
