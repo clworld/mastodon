@@ -4,6 +4,7 @@ module RoutingHelper
   extend ActiveSupport::Concern
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::AssetTagHelper
+  include Webpacker::Helper
 
   included do
     def default_url_options
@@ -18,6 +19,10 @@ module RoutingHelper
 	  asset_url = ActionController::Base.helpers.asset_url(source, options)
 	  asset_url =~ /^http/ ? asset_url : URI.join(root_url, asset_url).to_s
 	end
+  end
+
+  def full_pack_url(source, **options)
+    full_asset_url(asset_pack_path(source, options))
   end
 
   private
