@@ -17,33 +17,24 @@ class Pubsubhubbub::DeliveryWorker
     @payload = payload
     process_delivery unless blocked_domain?
   rescue => e
+	Rails.logger.warn("Delivery failed for #{subscription&.callback_url}: #{e.message}")
     raise e.class, "Delivery failed for #{subscription&.callback_url}: #{e.message}", e.backtrace[0]
   end
 
   private
 
   def process_delivery
-	begin
-      payload_delivery
-    rescue => e
-	  Rails.logger.warn("Delivery failed for #{subscription.callback_url}: #{e.message}")
-	  raise
-	end
+    callback_post_payload do |payload_delivery|
+      raise Mastodon::UnexpectedResponseError, payload_delivery unless response_successful? payload_delivery
+    end
 
-    raise Mastodon::UnexpectedResponseError, payload_delivery unless response_successful?
-
-    payload_delivery.connection&.close
     subscription.touch(:last_successful_delivery_at)
   end
 
-  def payload_delivery
-    @_payload_delivery ||= callback_post_payload
-  end
-
-  def callback_post_payload
+  def callback_post_payload(&block)
     request = Request.new(:post, subscription.callback_url, body: payload)
     request.add_headers(headers)
-    request.perform
+    request.perform(&block)
   end
 
   def blocked_domain?
@@ -85,7 +76,7 @@ class Pubsubhubbub::DeliveryWorker
     OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), subscription.secret, payload)
   end
 
-  def response_successful?
+  def response_successful?(payload_delivery)
     payload_delivery.code > 199 && payload_delivery.code < 300
   end
 end
