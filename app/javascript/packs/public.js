@@ -1,5 +1,8 @@
 import loadPolyfills from '../mastodon/load_polyfills';
 import ready from '../mastodon/ready';
+import { start } from '../mastodon/common';
+
+start();
 
 window.addEventListener('message', e => {
   const data = e.data || {};
@@ -64,7 +67,7 @@ function main() {
     [].forEach.call(document.querySelectorAll('.logo-button'), (content) => {
       content.addEventListener('click', (e) => {
         e.preventDefault();
-        window.open(e.target.href, 'mastodon-intent', 'width=400,height=400,resizable=no,menubar=no,status=no,scrollbars=yes');
+        window.open(e.target.href, 'mastodon-intent', 'width=445,height=600,resizable=no,menubar=no,status=no,scrollbars=yes');
       });
     });
 
