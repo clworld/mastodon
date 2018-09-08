@@ -42,6 +42,7 @@ module Mastodon
       :bg,
       :ca,
       :co,
+      :cs,
       :cy,
       :da,
       :de,
@@ -69,12 +70,14 @@ module Mastodon
       :pl,
       :pt,
       :'pt-BR',
+      :ro,
       :ru,
       :sk,
       :sl,
       :sr,
       :'sr-Latn',
       :sv,
+      :ta,
       :te,
       :th,
       :tr,
@@ -85,6 +88,7 @@ module Mastodon
     ]
 
     config.i18n.default_locale = ENV['DEFAULT_LOCALE']&.to_sym
+
     unless config.i18n.available_locales.include?(config.i18n.default_locale)
       config.i18n.default_locale = :en
     end
