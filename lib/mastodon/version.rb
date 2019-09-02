@@ -13,11 +13,11 @@ module Mastodon
     end
 
     def patch
-      2
+      3
     end
 
-    def pre
-      nil
+    def flags
+      ''
     end
 	
     class << self
@@ -41,17 +41,17 @@ module Mastodon
       @@append_version
     end
 
-    def flags
+    def suffix
       ''
     end
 
     def to_a
-      [major, minor, patch, pre].select { |v| v.present? }
+      [major, minor, patch].select { |v| v.present? }
     end
 
     def to_s
       append = append_version.present? ? " #{append_version}" : ''
-      [to_a.join('.'), flags, append].join
+      [to_a.join('.'), flags, suffix, append].join
     end
 
     def repository
